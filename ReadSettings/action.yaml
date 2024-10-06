@@ -1,0 +1,38 @@
+name: Read Settings
+author: Microsoft Corporation
+inputs:
+  shell:
+    description: Shell in which you want to run the action (powershell or pwsh)
+    required: false
+    default: powershell
+  project:
+    description: Project folder
+    required: false
+    default: '.'
+  get:
+    description: Specifies which properties to get from the settings file, default is all
+    required: false
+    default: ''
+outputs:
+  GitHubRunnerJson:
+    description: GitHubRunner in compressed Json format
+    value: ${{ steps.readsettings.outputs.GitHubRunnerJson }}
+  GitHubRunnerShell:
+    description: Shell for GitHubRunner jobs
+    value: ${{ steps.readsettings.outputs.GitHubRunnerShell }}
+runs:
+  using: composite
+  steps:
+    - name: run
+      shell: ${{ inputs.shell }}
+      id: readsettings
+      env:
+        _project: ${{ inputs.project }}
+        _get: ${{ inputs.get }}
+      run: |
+        ${{ github.action_path }}/../Invoke-AlGoAction.ps1 -ActionName "ReadSettings" -Action {
+          ${{ github.action_path }}/ReadSettings.ps1 -project $ENV:_project -get $ENV:_get
+        }
+branding:
+  icon: terminal
+  color: red
