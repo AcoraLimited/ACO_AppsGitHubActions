@@ -138,7 +138,7 @@ function TestRunnerPrerequisites {
     }
 }
 
-function TestALGoRepository {
+function TestAcoraRepository {
     Param(
         [string] $baseFolder = $ENV:GITHUB_WORKSPACE
     )
