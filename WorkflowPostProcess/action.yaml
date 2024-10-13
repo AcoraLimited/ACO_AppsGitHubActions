@@ -1,0 +1,35 @@
+name: Workflow Post Process
+author: Microsoft Corporation
+inputs:
+  shell:
+    description: Shell in which you want to run the action (powershell or pwsh)
+    required: false
+    default: powershell
+  telemetryScopeJson:
+    description: Telemetry scope generated during the workflow initialization
+    required: false
+    default: '7b7d'
+  currentJobContext:
+    description: The current job context
+    required: false
+    default: ''
+  actionsRef:
+    description: The ref of the action
+    required: false
+    default: ${{ github.action_ref }}
+runs:
+  using: composite
+  steps:
+    - name: run
+      shell: ${{ inputs.shell }}
+      env:
+        _telemetryScopeJson: ${{ inputs.telemetryScopeJson }}
+        _currentJobContext: ${{ inputs.currentJobContext }}
+        _actionsRef: ${{ inputs.actionsRef }}
+      run: |
+        ${{ github.action_path }}/../Invoke-AlGoAction.ps1 -ActionName "WorkflowPostProcess" -Action {
+          ${{ github.action_path }}/WorkflowPostProcess.ps1 -telemetryScopeJson $ENV:_telemetryScopeJson -currentJobContext $ENV:_currentJobContext -actionsRef $ENV:_actionsRef
+        }
+branding:
+  icon: terminal
+  color: blue

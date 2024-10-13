@@ -1,0 +1,33 @@
+{
+    "id": "364f68de-c52e-43d5-a70b-10a278d8a086",
+    "name": "SampleALProject",
+    "publisher": "Acora Limited",
+    "version": "24.0.0.0",
+    "brief": "",
+    "description": "",
+    "privacyStatement": "https://acora.com/privacy-policy/",
+    "EULA": "https://www.acora.com/terms-conditions",
+    "help": "https://www.acora.com/extensions-support-2",
+    "url": "https://www.acora.com/extensions-support-2",
+    "logo": "./logo/icon.png",
+    "dependencies": [],
+    "screenshots": [],
+    "platform": "1.0.0.0",
+    "application": "24.0.0.0",
+    "idRanges": [
+      {
+        "from": 50100,
+        "to": 50149
+      }
+    ],
+    "features": [
+      "NoImplicitWith"
+    ],
+    "resourceExposurePolicy": {
+      "allowDebugging": true,
+      "allowDownloadingSource": true,
+      "includeSourceInSymbolFile": true
+    },
+    "target": "Cloud"
+  }
+  

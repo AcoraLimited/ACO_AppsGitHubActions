@@ -6,7 +6,7 @@ Param(
     [Parameter(HelpMessage = "Project name if the repository is setup for multiple projects", Mandatory = $false)]
     [string] $project = '.',
     [ValidateSet("PTE", "AppSource App" , "Test App", "Performance Test App")]
-    [Parameter(HelpMessage = "Type of app to add (PTE, Test App)", Mandatory = $true)]
+    [Parameter(HelpMessage = "Type of app to add (PTE, AppSource App, Test App)", Mandatory = $true)]
     [string] $type,
     [Parameter(HelpMessage = "App Name", Mandatory = $true)]
     [string] $name,
@@ -25,12 +25,12 @@ Param(
 $tmpFolder = Join-Path ([System.IO.Path]::GetTempPath()) ([Guid]::NewGuid().ToString())
 
 try {
-    . (Join-Path -Path $PSScriptRoot -ChildPath "..\AL-Go-Helper.ps1" -Resolve)
+    . (Join-Path -Path $PSScriptRoot -ChildPath "..\Acora-Apps-Helper.ps1" -Resolve)
     $serverUrl, $branch = CloneIntoNewFolder -actor $actor -token $token -updateBranch $updateBranch -DirectCommit $directCommit -newBranchPrefix "create-$($type.replace(' ','-').ToLowerInvariant())"
     $baseFolder = (Get-Location).Path
     DownloadAndImportBcContainerHelper -baseFolder $baseFolder
 
-    import-module (Join-Path -path $PSScriptRoot -ChildPath "AppHelper.psm1" -Resolve)
+    Import-Module (Join-Path -path $PSScriptRoot -ChildPath "AppHelper.psm1" -Resolve)
     Write-Host "Template type : $type"
 
     # Check parameters
@@ -69,10 +69,11 @@ try {
     $orgfolderName = $name.Split([System.IO.Path]::getInvalidFileNameChars()) -join ""
     $folderName = GetUniqueFolderName -baseFolder $projectFolder -folderName $orgfolderName
     if ($folderName -ne $orgfolderName) {
-        OutputWarning -message "Folder $orgFolderName already exists in the repo, folder name $folderName will be used instead."
+        #OutputWarning -message "Folder $orgFolderName already exists in the repo, folder name $folderName will be used instead."
+        Write-Host "- Warning: Folder $orgFolderName already exists in the repo, folder name $folderName will be used instead."
     }
 
-    # Modify .AL-Go\settings.json
+    # Modify .Acora\settings.json
     try {
         $settingsJsonFile = Join-Path $projectFolder $ALGoSettingsFile
         $SettingsJson = Get-Content $settingsJsonFile -Encoding UTF8 | ConvertFrom-Json
@@ -105,13 +106,13 @@ try {
     }
 
     if ($type -eq "Performance Test App") {
-        NewSamplePerformanceTestApp -destinationPath (Join-Path $projectFolder $folderName) -name $name -publisher $publisher -version $appVersion -sampleCode $sampleCode -sampleSuite $sampleSuite -idrange $ids -appSourceFolder $tmpFolder
+        NewSamplePerformanceTestApp -destinationPath (Join-Path $projectFolder $folderName) -name $name -version $appVersion -sampleCode $sampleCode -sampleSuite $sampleSuite -idrange $ids -appSourceFolder $tmpFolder
     }
     elseif ($type -eq "Test App") {
-        NewSampleTestApp -destinationPath (Join-Path $projectFolder $folderName) -name $name -publisher $publisher -version $appVersion -sampleCode $sampleCode -idrange $ids
+        NewSampleTestApp -destinationPath (Join-Path $projectFolder $folderName) -name $name -version $appVersion -sampleCode $sampleCode -idrange $ids
     }
     else {
-        NewSampleApp -destinationPath (Join-Path $projectFolder $folderName) -name $name -publisher $publisher -version $appVersion -sampleCode $sampleCode -idrange $ids
+        NewSampleApp -destinationPath (Join-Path $projectFolder $folderName) -name $name -version $appVersion -sampleCode $sampleCode -idrange $ids
     }
 
     UpdateWorkspaces -projectFolder $projectFolder -appName $folderName

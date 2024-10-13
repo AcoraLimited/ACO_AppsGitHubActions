@@ -1,0 +1,12 @@
+{
+    "name": "Acora Cop Override",
+    "description": "These rules will override rules applied by the cop checkers for Acora projects",
+    "generalAction": "Hidden",
+    "rules": [
+        {
+            "id": "AL0254",
+            "action": "Hidden",
+            "justification": "Not possible to solve"
+        }
+    ]
+}
