@@ -1,4 +1,5 @@
 name: Dump Workflow Info
+description: Dump information about the workflow
 author: Microsoft Corporation
 inputs:
   shell:

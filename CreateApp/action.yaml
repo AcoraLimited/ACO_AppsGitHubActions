@@ -1,4 +1,5 @@
 name: Create App
+description: Create a new app
 author: Acora Limited
 permissions:
   contents: write

@@ -1,4 +1,5 @@
 name: Workflow Initialize
+description: Initialize the workflow
 author: Microsoft Corporation
 inputs:
   shell:

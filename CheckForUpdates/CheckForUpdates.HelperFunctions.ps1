@@ -334,7 +334,7 @@ function ReplaceOwnerRepoAndBranch {
 
     # The Original Owner and Repo in the AL-Go repository are nickgoddard777/ACO_AppsGithubActions, acoralimited/ACO_AppsBCTemplate and microsoft/AL-Go-AppSource
     $originalOwnerAndRepo = @{
-        "actionsRepo" = "nickgoddard777/ACO_AppsGithubActions"
+        "actionsRepo" = "AcoraLimited/ACO_AppsGithubActions"
         "perTenantExtensionRepo" = "acoralimited/ACO_AppsBCTemplate"
         "appSourceAppRepo" = "microsoft/AL-Go-AppSource"
     }
@@ -349,7 +349,7 @@ function ReplaceOwnerRepoAndBranch {
     }
 
     # Replace URL's to actions repository first
-    $regex = "^(.*)https:\/\/raw\.githubusercontent\.com\/nickgoddard777\/ACO_AppsGithubActions\/$originalBranch(.*)$"
+    $regex = "^(.*)https:\/\/raw\.githubusercontent\.com\/acoralimited\/ACO_AppsGithubActions\/$originalBranch(.*)$"
     $replace = "`${1}https://raw.githubusercontent.com/$($templateOwner)/AL-Go/$($templateBranch)/Actions`${2}"
     $lines = $lines | ForEach-Object { $_ -replace $regex, $replace }
 

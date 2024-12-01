@@ -5,11 +5,11 @@ Param(
     [string] $actionsRef
 )
 
-. (Join-Path -Path $PSScriptRoot -ChildPath "..\Acora-Helper.ps1" -Resolve)
+. (Join-Path -Path $PSScriptRoot -ChildPath "..\Acora-Apps-Helper.ps1" -Resolve)
 . (Join-Path -Path $PSScriptRoot -ChildPath "..\Acora-TestRepoHelper.ps1" -Resolve)
 
-if ($actionsRepo -eq 'nickgoddard7777/AXO_AppsGithubActions') {
-    Write-Host "Using Acora for GitHub $actionsRef"
+if ($actionsRepo -eq 'AcoraLimited/ACO_AppsGitHubActions') {
+    Write-Host "Using Acora Actions for GitHub {$actionsRef}"
     $verstr = $actionsRef
 }
 elseif ($actionsRepo -eq 'AcoraLimited/AC_AppsBCTemplate') {

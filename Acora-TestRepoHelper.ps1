@@ -143,7 +143,7 @@ function TestAcoraRepository {
         [string] $baseFolder = $ENV:GITHUB_WORKSPACE
     )
 
-    if ($ENV:ALGoOrgSettings) {
+    if ($ENV:ALOrgSettings) {
         Write-Host "Checking AL-Go Org Settings variable (ALGoOrgSettings)"
         Test-JsonStr -jsonStr "$ENV:ALGoOrgSettings" -settingsDescription 'ALGoOrgSettings variable' -type 'Variable'
     }
