@@ -12,7 +12,7 @@ runs:
     - name: run
       shell: ${{ inputs.shell }}
       run: |
-        ${{ github.action_path }}/../Invoke-AlGoAction.ps1 -ActionName "DumpWorkflowInfo" -Action {
+        ${{ github.action_path }}/../Invoke-Action.ps1 -ActionName "DumpWorkflowInfo" -Action {
           ${{ github.action_path }}/DumpWorkflowInfo.ps1
         }
 branding:
