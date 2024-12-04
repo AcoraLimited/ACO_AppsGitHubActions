@@ -1,0 +1,57 @@
+name: Increment Version Number
+author: Acora Limited
+description: Increment the version number in the app.json file based on AL:GO form Microsoft Corporation
+
+inputs:
+  shell:
+    description: Shell in which you want to run the action (powershell or pwsh)
+    required: false
+    default: powershell
+  actor:
+    description: The GitHub actor running the action
+    required: false
+    default: ${{ github.actor }}
+  token:
+    description: The GitHub token running the action
+    required: false
+    default: ${{ github.token }}
+  projects:
+    description: List of project names if the repository is setup for multiple projects (* for all projects)
+    required: false
+    default: '*'
+  versionNumber:
+    description: The version to update to. Use Major.Minor for absolute change, use +1 to bump to the next major version, use +0.1 to bump to the next minor version
+    required: true
+  updateBranch:
+    description: Set the branch to update
+    required: false
+    default: ${{ github.ref_name }}
+  directCommit:
+    description: Direct Commit?
+    required: false
+    default: 'false'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+runs:
+  using: composite
+  steps:
+    - name: run
+      shell: ${{ inputs.shell }}
+      env:
+        _actor: ${{ inputs.actor }}
+        _token: ${{ inputs.token }}
+        _projects: ${{ inputs.projects }}
+        _versionNumber: ${{ inputs.versionNumber }}
+        _updateBranch: ${{ inputs.updateBranch }}
+        _directCommit: ${{ inputs.directCommit }}
+      run: |
+        ${{ github.action_path }}/../Invoke-Action.ps1 -ActionName "IncrementVersionNumber" -Action {
+          ${{ github.action_path }}/IncrementVersionNumber.ps1 -actor $ENV:_actor -token $ENV:_token -projects $ENV:_projects -versionNumber $ENV:_versionNumber -updateBranch $ENV:_updateBranch -directCommit ($ENV:_directCommit -eq 'true')
+        }
+
+branding:
+  icon: terminal
+  color: blue
