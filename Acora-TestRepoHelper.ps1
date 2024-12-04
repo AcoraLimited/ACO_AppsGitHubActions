@@ -144,12 +144,12 @@ function TestAcoraRepository {
     )
 
     if ($ENV:ALOrgSettings) {
-        Write-Host "Checking AL-Go Org Settings variable (ALGoOrgSettings)"
-        Test-JsonStr -jsonStr "$ENV:ALGoOrgSettings" -settingsDescription 'ALGoOrgSettings variable' -type 'Variable'
+        Write-Host "Checking AL Org Settings variable (ALOrgSettings)"
+        Test-JsonStr -jsonStr "$ENV:ALOrgSettings" -settingsDescription 'ALOrgSettings variable' -type 'Variable'
     }
-    if ($ENV:ALGoRepoSettings) {
-        Write-Host "Checking AL-Go Repo Settings variable (ALGoRepoSettings)"
-        Test-JsonStr -jsonStr "$ENV:ALGoRepoSettings" -settingsDescription 'ALGoRepoSettings variable' -type 'Variable'
+    if ($ENV:ALRepoSettings) {
+        Write-Host "Checking AL Repo Settings variable (ALRepoSettings)"
+        Test-JsonStr -jsonStr "$ENV:ALRepoSettings" -settingsDescription 'ALRepoSettings variable' -type 'Variable'
     }
 
     Write-Host "BaseFolder: $baseFolder"
